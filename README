@@ -1,0 +1,9 @@
+This is a simple JS application for managing a simple 8 person/team bracket single elimination tournament, where rounds end on fixed scores.  Due to the single page aspect of the application refreshing or navigating away will likely cause the state to be lost.
+
+To Use:
+  Open index.html in a browser (most likely chrome is your best bet).
+
+  Asperations:
+  Have a rich set of keyboard controls to avoid having to mouse around on the application.  Follow gmail like conventions for navigation and '?' for help.
+
+  Once I figure out the JS application I can tie this to a Node.JS backend to keep state backed up and viewable from multiple connected clients (in the instance of a scorer needing access in addition to the AV team projecting the HUD).
