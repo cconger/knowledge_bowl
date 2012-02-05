@@ -1,0 +1,43 @@
+%html
+	%head
+		%script{:type => "text/javascript",
+		        :src  => "javascript/third-party/lavaCore.js"}
+		%script{:type => "text/javascript",
+		        :src  => "javascript/third-party/serenade.0.1.1.min.js"}
+		%script{:type => "text/javascript",
+		        :src  => "javascript/application.js"}
+		%link{:rel => "stylesheet", :type => "text/css", :href => "css/style.css"}
+		
+		%script{:type => "text/x-serenade",
+		        :id => "bracketMatch"}
+			:plain
+				.bracketNode[event:click=nodeClicked]
+					.team.teamTop
+						- in  @teamTop
+							.teamname @teamName
+						.score @teamTopScore
+					.team.teamBottom
+						- in  @teamBottom
+							.teamname @teamName
+						.score @teamBottomScore
+		
+		%script{:type => "text/x-serenade",
+		        :id => "roundView"}
+			:plain
+				.roundWrapper
+					.roundTopTeam.roundTeam
+						- in @teamTop
+							.grandioseTeam @teamName
+						.grandioseScore @teamTopScore
+					.buffer "VS"
+					.roundBottomTeam.roundTeam
+						.grandioseScore @teamBottomScore
+						- in @teamBottom
+							.grandioseTeam @teamName
+				
+
+	%body
+		#tier-2.bracketTier
+		#tier-1.bracketTier
+		#tier-0.bracketTier
+		#roundOverlay.overlay.visible-false

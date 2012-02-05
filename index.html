@@ -1,0 +1,37 @@
+<html>
+  <head>
+    <script src='javascript/third-party/lavaCore.js' type='text/javascript'></script>
+    <script src='javascript/third-party/serenade.0.1.1.min.js' type='text/javascript'></script>
+    <script src='javascript/application.js' type='text/javascript'></script>
+    <link href='css/style.css' rel='stylesheet' type='text/css' />
+    <script id='bracketMatch' type='text/x-serenade'>
+      .bracketNode[event:click=nodeClicked]
+      	.team.teamTop
+      		- in  @teamTop
+      			.teamname @teamName
+      		.score @teamTopScore
+      	.team.teamBottom
+      		- in  @teamBottom
+      			.teamname @teamName
+      		.score @teamBottomScore
+    </script>
+    <script id='roundView' type='text/x-serenade'>
+      .roundWrapper
+      	.roundTopTeam.roundTeam
+      		- in @teamTop
+      			.grandioseTeam @teamName
+      		.grandioseScore @teamTopScore
+      	.buffer "VS"
+      	.roundBottomTeam.roundTeam
+      		.grandioseScore @teamBottomScore
+      		- in @teamBottom
+      			.grandioseTeam @teamName
+    </script>
+  </head>
+  <body>
+    <div class='bracketTier' id='tier-2'></div>
+    <div class='bracketTier' id='tier-1'></div>
+    <div class='bracketTier' id='tier-0'></div>
+    <div class='overlay visible-false' id='roundOverlay'></div>
+  </body>
+</html>
