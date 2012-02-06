@@ -1,3 +1,5 @@
+Knowledge Bowl: v0.1
+
 This is a simple JS application for managing a simple 8 person/team bracket single elimination tournament, where rounds end on fixed scores.  Due to the single page aspect of the application refreshing or navigating away will likely cause the state to be lost.
 
 To Use:
