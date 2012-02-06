@@ -38,7 +38,8 @@ body {
         border-radius: 5px;
         width: 69px;
         text-align: center;
-        background: #828282; }
+        background: #828282;
+        cursor: default; }
       #roundOverlay .roundWrapper .roundTeam.roundTopTeam .grandioseTeam {
         border-top-left-radius: 5px;
         border-bottom-left-radius: 5px;
@@ -83,7 +84,10 @@ body {
     border: solid thin #CDCDCD;
     border-radius: 3px;
     position: relative;
-    cursor: default; }
+    cursor: default;
+    -webkit-transition: opacity 1s; }
+    .bracketTier .bracketNode.active-false {
+      opacity: 0.5; }
     .bracketTier .bracketNode .teamTop {
       border-bottom: solid thin #CDCDCD; }
     .bracketTier .bracketNode .team {

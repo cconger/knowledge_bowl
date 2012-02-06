@@ -55,6 +55,7 @@ body
 				width: 69px;
 				text-align: center;
 				background: #828282;
+				cursor: default;
 			}
 			
 			&.roundTopTeam
@@ -129,6 +130,12 @@ body
 		border-radius: 3px;
 		position: relative;
 		cursor: default;
+		-webkit-transition: opacity 1s;
+		
+		&.active-false
+		{
+			opacity: 0.5;
+		}
 
 		.teamTop
 		{

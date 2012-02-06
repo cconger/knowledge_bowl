@@ -11,14 +11,14 @@
 		%script{:type => "text/x-serenade",
 		        :id => "bracketMatch"}
 			:plain
-				.bracketNode[event:click=nodeClicked]
+				.bracketNode[class=@active event:click=nodeClicked]
 					.team.teamTop
-						- in  @teamTop
-							.teamname @teamName
+						- in @teamTop
+							- view "teamView"
 						.score @teamTopScore
 					.team.teamBottom
 						- in  @teamBottom
-							.teamname @teamName
+							- view "teamView"
 						.score @teamBottomScore
 		
 		%script{:type => "text/x-serenade",
@@ -28,10 +28,10 @@
 					.roundTopTeam.roundTeam
 						- in @teamTop
 							.grandioseTeam @teamName
-						.grandioseScore @teamTopScore
+						.grandioseScore[event:click=topScoreClicked] @teamTopScore
 					.buffer "VS"
 					.roundBottomTeam.roundTeam
-						.grandioseScore @teamBottomScore
+						.grandioseScore[event:click=bottomScoreClicked] @teamBottomScore
 						- in @teamBottom
 							.grandioseTeam @teamName
 				

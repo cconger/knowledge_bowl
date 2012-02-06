@@ -10,38 +10,38 @@ var App = new Class(
 		}
 		
 		var tierCounter = 0;
-		this._tiers = [[]];
+		this._tiers = [];
 		
 		var matches = config.teams / 2;
-		for(i = 0; i < matches; i++)
-		{
-			var seedMatch = new SeededMatch({
-				team1: this._teams[(i*2)],
-				team2: this._teams[(i*2)+1]
-			});
-			this._tiers[tierCounter].push(seedMatch);
-			var match = Serenade.render('bracketMatch', seedMatch, new BracketController());
-			document.getElementById("tier-" + tierCounter).appendChild(match);
-		}
-		tierCounter++;
-		
-		matches = matches / 2;
+		var first = true;
 		while(matches >= 1)
 		{
 			this._tiers.push([]);
 			for(i = 0; i < matches; i++)
 			{
-				var newMatch = new ResultantMatch(
+				var newMatch;
+				if(first)
 				{
-					team1Match: this._tiers[tierCounter - 1][(i*2)],
-					team2Match: this._tiers[tierCounter - 1][(i*2)+1]
-				});
+					newMatch = new SeededMatch({
+						team1: this._teams[(i*2)],
+						team2: this._teams[(i*2)+1]
+					});
+				}
+				else
+				{
+					newMatch = new ResultantMatch(
+					{
+						team1Match: this._tiers[tierCounter - 1][(i*2)],
+						team2Match: this._tiers[tierCounter - 1][(i*2)+1]
+					});
+				}
 				this._tiers[tierCounter].push(newMatch);
 				var matchView = Serenade.render('bracketMatch', newMatch, new BracketController());
 				document.getElementById("tier-" + tierCounter).appendChild(matchView);
 			}
 			tierCounter++;
 			matches = matches / 2;
+			first = false;
 		}
 		
 		this._overlay = document.getElementById("roundOverlay");
@@ -90,6 +90,10 @@ var BracketController = new Class(
 {
 	nodeClicked: function (evt)
 	{
+		if(!this.model.get("active"))
+		{
+			return;
+		}
 		var overlay_wrapper = document.getElementById("roundOverlay");
 		overlay_wrapper.innerHTML = "";
 		var roundView = Serenade.render("roundView", this.model, new OverlayController());
@@ -98,9 +102,43 @@ var BracketController = new Class(
 	}
 });
 
+var TeamController = new Class(
+{
+	teamClicked: function (evt)
+	{
+		console.log(evt, this);
+		if(this.model !== TBDTEAM)
+		{
+			//TODO: change to in place edit.
+			this.model.set("teamName", prompt("Change team name?"));
+		}
+		evt.stopPropagation();
+	}
+});
+
+Serenade.view('teamView', '.teamname[event:click=teamClicked] @teamName');
+Serenade.controller('teamView', TeamController);
+
 var OverlayController = new Class(
 {
-	
+	topScoreClicked: function(event)
+	{
+		var newScore = this.model.teamTopScore + 1;
+		if(event.shiftKey)
+		{
+			newScore = Math.max(0, newScore - 2);
+		}
+		this.model.set("teamTopScore", newScore);
+	},
+	bottomScoreClicked: function(event)
+	{
+		var newScore = this.model.teamBottomScore + 1;
+		if(event.shiftKey)
+		{
+			newScore = Math.max(0, newScore - 2);
+		}
+		this.model.set("teamBottomScore", newScore);
+	}
 });
 
 var Team = new Class(Serenade.Model,
@@ -151,11 +189,11 @@ var ResultantMatch = new Class(Serenade.Model,
 		{
 			dependsOn: ["teamTop", "teamBottom", "teamTopScore", "teamBottomScore"],
 			get: function(){
-				if(this.get('teamTopScore') > this._scoreCap)
+				if(this.get('teamTopScore') >= this._scoreCap)
 				{
 					return this.get('teamTop');
 				}
-				else if(this.get('teamBottomScore') > this._scoreCap)
+				else if(this.get('teamBottomScore') >= this._scoreCap)
 				{
 					return this.get('teamBottom');
 				}
@@ -163,6 +201,18 @@ var ResultantMatch = new Class(Serenade.Model,
 				{
 					return TBDTEAM;
 				}
+			}
+		});
+		this.property("active",
+		{
+			dependsOn: ["teamTop", "teamBottom"],
+			get: function(){
+				return this.get("teamTop") !== TBDTEAM &&
+				       this.get("teamBottom") !== TBDTEAM;
+			},
+			format: function(value)
+			{
+				return "active-" + value;
 			}
 		});
 	},
@@ -196,11 +246,11 @@ var SeededMatch = new Class(Serenade.Model,
 		{
 			dependsOn: ["teamTop", "teamBottom", "teamTopScore", "teamBottomScore"],
 			get: function(){
-				if(this.get('teamTopScore') > this._scoreCap)
+				if(this.get('teamTopScore') >= this._scoreCap)
 				{
 					return this.get('teamTop');
 				}
-				else if(this.get('teamBottomScore') > this._scoreCap)
+				else if(this.get('teamBottomScore') >= this._scoreCap)
 				{
 					return this.get('teamBottom');
 				}
@@ -219,6 +269,7 @@ var SeededMatch = new Class(Serenade.Model,
 		this._scoreCap = config.scoreCap || 11;
 		this.set("teamTopScore", 0);
 		this.set("teamBottomScore", 0);
+		this.set("active", true);
 	}
 });
 
