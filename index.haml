@@ -34,7 +34,10 @@
 						.grandioseScore[event:click=bottomScoreClicked] @teamBottomScore
 						- in @teamBottom
 							.grandioseTeam @teamName
-				
+					.menu
+						.menu-item[event:click=swapClicked] "Swap"
+						.menu-item[event:click=resetClicked] "Reset"
+						.menu-item[event:click=closeClicked] "Close"
 
 	%body
 		#tier-2.bracketTier

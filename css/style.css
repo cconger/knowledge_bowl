@@ -16,7 +16,21 @@ body {
     box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.4);
     border-radius: 4px;
     padding: 4px;
-    margin: 42px auto; }
+    margin: 42px auto;
+    position: relative; }
+    #roundOverlay .roundWrapper .menu {
+      position: absolute;
+      bottom: 4px;
+      right: 0;
+      display: -webkit-box;
+      color: #CDCDCD;
+      font-size: 14px;
+      cursor: default; }
+      #roundOverlay .roundWrapper .menu .menu-item {
+        margin: 0 6px;
+        cursor: pointer; }
+        #roundOverlay .roundWrapper .menu .menu-item:hover {
+          color: #999; }
     #roundOverlay .roundWrapper .roundTeam {
       display: -webkit-box;
       -webkit-box-align: center;
@@ -39,7 +53,7 @@ body {
         width: 69px;
         text-align: center;
         background: #828282;
-        cursor: default; }
+        cursor: pointer; }
       #roundOverlay .roundWrapper .roundTeam.roundTopTeam .grandioseTeam {
         border-top-left-radius: 5px;
         border-bottom-left-radius: 5px;

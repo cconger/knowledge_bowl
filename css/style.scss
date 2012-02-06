@@ -26,6 +26,29 @@ body
 		border-radius: 4px;
 		padding: 4px;
 		margin: 42px auto;
+		position: relative;
+		
+		.menu
+		{
+			position:absolute;
+			bottom: 4px;
+			right: 0;
+			display: -webkit-box;
+			color: #CDCDCD;
+			font-size: 14px;
+			cursor: default;
+			
+			.menu-item
+			{
+				margin: 0 6px;
+				cursor: pointer;
+				
+				&:hover
+				{
+					color: #999;
+				}
+			}
+		}
 		
 		.roundTeam
 		{
@@ -55,7 +78,7 @@ body
 				width: 69px;
 				text-align: center;
 				background: #828282;
-				cursor: default;
+				cursor: pointer;
 			}
 			
 			&.roundTopTeam

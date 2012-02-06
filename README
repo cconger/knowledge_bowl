@@ -7,3 +7,11 @@ To Use:
   Have a rich set of keyboard controls to avoid having to mouse around on the application.  Follow gmail like conventions for navigation and '?' for help.
 
   Once I figure out the JS application I can tie this to a Node.JS backend to keep state backed up and viewable from multiple connected clients (in the instance of a scorer needing access in addition to the AV team projecting the HUD).
+
+TODO: 
+* Hilight the winner of each round.
+* Give visual indication of score cap reached
+* Allow you to modify the score cap on the match
+* Easter egg on victory
+* Allow custom games to be created.
+* Bracket left to right instead of up down?

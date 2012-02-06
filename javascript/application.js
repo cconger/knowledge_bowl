@@ -109,8 +109,13 @@ var TeamController = new Class(
 		console.log(evt, this);
 		if(this.model !== TBDTEAM)
 		{
+			var newName = prompt("Change team name?");
+			//Awful practice I know. blocking calls make me sad.
+			if(newName)
+			{
+				this.model.set("teamName", newName);
+			}
 			//TODO: change to in place edit.
-			this.model.set("teamName", prompt("Change team name?"));
 		}
 		evt.stopPropagation();
 	}
@@ -138,6 +143,33 @@ var OverlayController = new Class(
 			newScore = Math.max(0, newScore - 2);
 		}
 		this.model.set("teamBottomScore", newScore);
+	},
+	closeClicked: function(event)
+	{
+		app.hideOverlay();
+	},
+	resetClicked: function(event)
+	{
+		this.model.set("teamTopScore", 0);
+		this.model.set("teamBottomScore", 0);
+	},
+	swapClicked: function(event)
+	{
+		var topTeam,topScore = this.model.get("teamTopScore");
+		if(this.model.get("topDeterminateMatch"))
+		{
+			topTeam = this.model.get("topDeterminateMatch");
+			this.model.set("topDeterminateMatch", this.model.get("bottomDeterminateMatch"));
+			this.model.set("bottomDeterminateMatch", topTeam);
+		}
+		else
+		{
+			topTeam = this.model.get("teamTop");
+			this.model.set("teamTop", this.model.get("teamBottom"));
+			this.model.set("teamBottom", topTeam);
+		}
+		this.model.set("teamTopScore", this.model.get("teamBottomScore"));
+		this.model.set("teamBottomScore", topScore);
 	}
 });
 
@@ -166,13 +198,13 @@ var ResultantMatch = new Class(Serenade.Model,
 		this._scoreCap = 999999; //Insanely large value until overridden in constructor.
 		
 		this.property("teamTop",{
-			dependsOn: "topDeterminateMatch.winner",
+			dependsOn: ["topDeterminateMatch", "topDeterminateMatch.winner"],
 			get: function(){
 				return this.get("topDeterminateMatch").winner;
 			}
 		});
 		this.property("teamBottom",{
-			dependsOn: "bottomDeterminateMatch.winner",
+			dependsOn: ["bottomDeterminateMatch", "bottomDeterminateMatch.winner"],
 			get: function(){
 				return this.get("bottomDeterminateMatch").winner;
 			}
