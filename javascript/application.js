@@ -278,11 +278,11 @@ var SeededMatch = new Class(Serenade.Model,
 		{
 			dependsOn: ["teamTop", "teamBottom", "teamTopScore", "teamBottomScore"],
 			get: function(){
-				if(this.get('teamTopScore') >= this._scoreCap)
+				if(this.get('teamTopScore') > this.get('teamBottomScore'))
 				{
 					return this.get('teamTop');
 				}
-				else if(this.get('teamBottomScore') >= this._scoreCap)
+				else if(this.get('teamBottomScore') > this.get('teamTopScore'))
 				{
 					return this.get('teamBottom');
 				}
